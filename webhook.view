@@ -1,0 +1,309 @@
+view: costs_by_looker {
+  sql_table_name: marketing.costs_by_looker ;;
+
+  dimension: cost {
+
+    type: number
+    sql: ${TABLE}.cost ;;
+    action: {
+      label: "Update Cost Value"
+      #url: "https://hooks.zapier.com/hooks/catch/6128348/o4nfscr/"
+      #url: "https://hooks.zapier.com/hooks/catch/2005679/o6z1ofb/"
+      #url: "https://us-central1-precise-ascent-261511.cloudfunctions.net/function-1"
+      #url : "https://qla5dhcdh3.execute-api.us-east-1.amazonaws.com/test/connection"
+      url : "https://oa3rdqjj5a.execute-api.us-east-1.amazonaws.com/Looker/con"
+
+
+
+     param: {
+        name: "cost"
+        value: " {{ value }}"
+      }
+     param: {
+       name: "typeName"
+       value: "Cost"
+     }
+      param: {
+        name: "DateVal"
+        value: " {{  costs_by_looker.created_month }}"
+      }
+      param: {
+        name: "cost_type"
+        value: " {{  costs_by_looker.cost_type }}"
+        }
+      form_param: {
+        name: "NewValue"
+        type: string
+        label: "Enter new value"
+        description: "Enter new amount "
+        required: yes
+      }
+    }
+
+    action: {
+      label: "Delete Row"
+      #url: "https://hooks.zapier.com/hooks/catch/6128348/o4nfscr/"
+      #url: "https://hooks.zapier.com/hooks/catch/2005679/o6z1ofb/"
+      #url: "https://us-central1-precise-ascent-261511.cloudfunctions.net/function-1"
+      #url : "https://qla5dhcdh3.execute-api.us-east-1.amazonaws.com/test/connection"
+      url : "https://oa3rdqjj5a.execute-api.us-east-1.amazonaws.com/Looker/con"
+
+      param: {
+        name: "cost"
+        value: " {{ value }}"
+      }
+      param: {
+        name: "typeName"
+        value: "Delete"
+      }
+      param: {
+        name: "DateVal"
+        value: " {{  costs_by_looker.created_month }}"
+      }
+      param: {
+        name: "cost_type"
+        value: " {{  costs_by_looker.cost_type }}"
+      }
+      form_param: {
+      name: "Delete"
+      description: "Are you sure you want to delete this row?"
+      type: select
+      option: {
+      name: "Yes "
+      label: "Yes"
+      }
+    }
+  }
+
+
+
+
+
+
+  }
+
+  dimension: cost_type {
+    type: string
+    sql: ${TABLE}.cost_type ;;
+    #sql: case when left(${TABLE}.cost_type,1)='z' then 'NA' else ${TABLE}.cost_type end ;;
+  }
+
+
+
+  dimension_group: date {
+    type: time
+    timeframes: [
+      raw,
+      date,
+      week,
+      month,
+      quarter,
+      year
+    ]
+    convert_tz: no
+    datatype: date
+    sql: ${TABLE}.date ;;
+  }
+
+  dimension: created_month {
+    type: date_month
+    sql: ${TABLE}.date ;;
+
+    action: {
+      label: "Update Date Value"
+      #url: "https://hooks.zapier.com/hooks/catch/6128348/o4nfscr/"
+      #url:  "https://hooks.zapier.com/hooks/catch/2005679/o6z1ofb/"
+      #url : "https://qla5dhcdh3.execute-api.us-east-1.amazonaws.com/test/connection"
+      url : "https://oa3rdqjj5a.execute-api.us-east-1.amazonaws.com/Looker/con"
+      param: {
+        name: "cost"
+        value: " {{  value }}"
+      }
+      param: {
+        name: "typeName"
+        value: "Date"
+      }
+      param: {
+        name: "DateVal"
+        value: " {{ value }}"
+      }
+      param: {
+        name: "cost_type"
+        value: " {{  costs_by_looker.cost_type }}"
+      }
+      form_param: {
+        name: "month"
+        description: "Choose months ahead (up to 6 months)"
+        type: select
+        option: {
+          name: "2020-01"
+          label: "2020-01"
+        }
+        option: {
+          name: "2020-02"
+          label: "2020-02"
+        }
+        option: {
+          name: "2020-03"
+          label: "2020-03"
+        }
+        option: {
+          name: "2020-04"
+          label: "2020-04"
+        }
+        option: {
+          name: "2020-05"
+          label: "2020-05"
+        }
+        option: {
+          name: "2020-06"
+          label: "2020-06"
+        }
+        required: yes
+      }
+
+    }
+
+    action: {
+      label: "Delete Row"
+      #url: "https://hooks.zapier.com/hooks/catch/6128348/o4nfscr/"
+      #url: "https://hooks.zapier.com/hooks/catch/2005679/o6z1ofb/"
+      #url: "https://us-central1-precise-ascent-261511.cloudfunctions.net/function-1"
+      #url : "https://qla5dhcdh3.execute-api.us-east-1.amazonaws.com/test/connection"
+      url : "https://oa3rdqjj5a.execute-api.us-east-1.amazonaws.com/Looker/con"
+
+      param: {
+        name: "cost"
+        value: " {{ value }}"
+      }
+      param: {
+        name: "typeName"
+        value: "Delete"
+      }
+      param: {
+        name: "DateVal"
+        value: " {{  costs_by_looker.created_month }}"
+      }
+      param: {
+        name: "cost_type"
+        value: " {{  costs_by_looker.cost_type }}"
+      }
+      form_param: {
+        name: "Delete"
+        description: "Are you sure you want to delete this row?"
+        type: select
+        option: {
+          name: "Yes "
+          label: "Yes"
+        }
+      }
+    }
+
+
+
+    action: {
+      label: "Insert new row"
+      #url: "https://hooks.zapier.com/hooks/catch/6128348/o694kxc/"
+      #url:  "https://hooks.zapier.com/hooks/catch/2005679/o6z1ofb/"
+      #url : "https://qla5dhcdh3.execute-api.us-east-1.amazonaws.com/test/connection"
+      url : "https://oa3rdqjj5a.execute-api.us-east-1.amazonaws.com/Looker/con"
+      param: {
+        name: "typeName"
+        value: "Insert"
+      }
+      form_param: {
+        name: "month"
+        description: "Choose months ahead (up to 6 months)"
+        type: select
+        option: {
+          name: "2020-01"
+          label: "2020-01"
+        }
+        option: {
+          name: "2020-02"
+          label: "2020-02"
+        }
+        option: {
+          name: "2020-03"
+          label: "2020-03"
+        }
+        option: {
+          name: "2020-04"
+          label: "2020-04"
+        }
+        option: {
+          name: "2020-05"
+          label: "2020-05"
+        }
+        option: {
+          name: "2020-06"
+          label: "2020-06"
+        }
+
+        required: yes
+      }
+
+
+      form_param: {
+        name: "cost_type"
+        description: "Choose cloud/marketing/meatups/salary"
+        type: select
+        option: {
+          name: "seo_google"
+          label: "seo_google"
+        }
+        option: {
+          name: "seo_bing"
+          label: "seo_bing"
+        }
+        option: {
+          name: "seo_others"
+          label: "seo_others"
+        }
+        option: {
+          name: "mediabuy_ad_roll"
+          label: "mediabuy_ad_roll"
+        }
+        option: {
+          name: "mediabuy_others"
+          label: "mediabuy_others"
+        }
+        option: {
+          name: "pr_influencers"
+          label: "pr_influencers"
+        }
+        option: {
+          name: "pr_releases"
+          label: "pr_releases"
+        }
+        option: {
+          name: "pr_sponsorships"
+          label: "pr_sponsorships"
+        }
+        option: {
+          name: "pr_others"
+          label: "pr_others"
+        }
+        required: yes
+        default: "{{value}}"
+      }
+
+      form_param: {
+        name: "NewValue"
+        type: string
+        label: "Enter new value"
+        description: "Enter cost value"
+        required: yes
+      }
+
+    }
+  }
+
+
+  measure: count {
+    type: count
+    drill_fields: []
+
+  }
+
+}
