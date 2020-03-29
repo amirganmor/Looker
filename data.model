@@ -1,0 +1,60 @@
+connection: "redshift-small-hdd"
+
+include: "*.view"
+week_start_day: sunday
+
+
+# persist_with: elementor_poc_default_datagroup
+access_grant: customer_confidentiality {
+  user_attribute: customer_confidentiality
+  allowed_values: [ "Yes" ]
+}
+
+access_grant: affiliate_confidentiality {
+  user_attribute: affiliate_confidentiality
+  allowed_values: [ "Yes" ]
+}
+
+access_grant: explore_permissions  {
+  user_attribute: explore_permissions
+  allowed_values: [ "Yes" ]
+}
+
+access_grant: explore_permissions_to_specific_explor  {
+  user_attribute: explore_permissions_to_specific_explor
+  allowed_values: [ "Yes" ]
+}
+
+
+explore: hs_threads_conversation_full {
+  group_label: "Help Scout"
+  label:"Help Scout"
+  hidden:  yes
+  required_access_grants: [explore_permissions]
+}
+
+
+
+explore: final_all_plat {
+  group_label: "marketing"
+  label:"marketing"
+  hidden:  yes
+  required_access_grants: [explore_permissions_to_specific_explor]
+}
+
+
+explore: costs_by_looker {
+  group_label: "marketing"
+  label:"manually costs"
+  persist_for: "0 seconds"
+  hidden:  no
+  required_access_grants: [explore_permissions]
+}
+
+explore: finance_manually_cost {
+  group_label: "marketing"
+  label: "finance_manually_cost"
+  persist_for: "0 seconds"
+  hidden:  no
+  required_access_grants: [explore_permissions]
+}
